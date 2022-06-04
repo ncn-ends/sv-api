@@ -74,6 +74,8 @@ public class Startup
         IHostApplicationLifetime lifetime)
     {
         lifetime.ApplicationStarted.Register(OnAppStarted);
+        
+        app.UseAppExceptionHandler();
 
         app.UseHttpLogging();
         if (env.IsDevelopment())

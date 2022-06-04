@@ -3,7 +3,6 @@ using app.Models;
 using app.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace app.Controllers;
 
@@ -47,50 +46,21 @@ public class BuildsController : ControllerBase
     [HttpPost("new")]
     public async Task<ActionResult<BuildOrderListDto>> SubmitList([FromBody] BuildOrderListDto buildOrderList)
     {
-        try
-        {
-            var added = await _services.Add(buildOrderList);
-            return Ok(added);
-        }
-        catch (AuthenticationException e)
-        {
-            Console.WriteLine(e.ToString());
-            return Unauthorized();
-        }
-        catch (ArgumentException e)
-        {
-            Console.WriteLine(e.ToString());
-            return BadRequest();
-        }
+        var added = await _services.Add(buildOrderList);
+        return Ok(added);
     }
 
     [HttpGet("one")]
     public IActionResult GetBuildById([FromQuery] int id)
     {
-        try
-        {
-            var build = _services.GetById(id);
-            return Ok(build);
-        }
-        catch (ArgumentException e)
-        {
-            Console.WriteLine(e.ToString());
-            return NotFound();
-        }
+        var build = _services.GetById(id);
+        return Ok(build);
     }
 
 
     [HttpGet("filtered")]
     public ActionResult<IEnumerable<BuildOrderList>> GetFilteredBuilds([FromQuery] FilteredBuildsQuery query)
     {
-        try
-        {
-            return Ok(_services.GetFiltered(query));
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.ToString());
-            return StatusCode(500);
-        }
+        return Ok(_services.GetFiltered(query));
     }
 }

@@ -27,92 +27,23 @@ public class CommentController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> SubmitComment([FromBody] CommentEndpointBody commentBody)
     {
-        try
-        {
-            var comment = await _services.SubmitComment(commentBody);
-            return Ok(comment);
-        }
-        catch (AuthenticationException e)
-        {
-            Console.WriteLine(e.ToString());
-            return Unauthorized();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.ToString());
-            return BadRequest();
-        }
+        var comment = await _services.SubmitComment(commentBody);
+        return Ok(comment);
     }
 
-    
+
     [HttpPut]
     public async Task<IActionResult> UpdateComment([FromBody] CommentEndpointBody commentBody)
     {
-        try
-        {
-            var updatedComment = await _services.UpdateComment(commentBody);
-            return Ok(updatedComment);
-        }
-        catch (ArgumentException e)
-        {
-            Console.WriteLine(e.ToString());
-            return StatusCode(404);
-        }
-        catch (SecurityException e)
-        {
-            Console.WriteLine(e.ToString());
-            return Forbid();
-        }
-        catch (CookieException e)
-        {
-            Console.WriteLine(e.ToString());
-            return StatusCode(406);
-        }
-        catch (AuthenticationException e)
-        {
-            Console.WriteLine(e.ToString());
-            return StatusCode(401);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.ToString());
-            return StatusCode(500);
-        }
+        var updatedComment = await _services.UpdateComment(commentBody);
+        return Ok(updatedComment);
     }
-    
-    
+
+
     [HttpDelete]
     public async Task<IActionResult> DeleteComment([FromQuery] int commentId)
     {
-        try
-        {
-            var updatedComment = await _services.DeleteComment(commentId);
-            return Ok(updatedComment);
-        }
-        catch (ArgumentException e)
-        {
-            Console.WriteLine(e.ToString());
-            return StatusCode(404);
-        }
-        catch (SecurityException e)
-        {
-            Console.WriteLine(e.ToString());
-            return Forbid();
-        }
-        catch (CookieException e)
-        {
-            Console.WriteLine(e.ToString());
-            return StatusCode(406);
-        }
-        catch (AuthenticationException e)
-        {
-            Console.WriteLine(e.ToString());
-            return StatusCode(401);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.ToString());
-            return StatusCode(500);
-        }
+        var updatedComment = await _services.DeleteComment(commentId);
+        return Ok(updatedComment);
     }
 }
