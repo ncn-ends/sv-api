@@ -4,11 +4,10 @@ namespace app.Extensions;
 
 public static class LifetimeEvents
 {
-    public static void OnAppStarted(IConfiguration config)
+    public static void OnAppStarted(string connectionString)
     {
         try
         {
-            var connectionString = config.GetValue<string>("ConnectionStrings:ApiDatabase");
             using SqlConnection conn = new SqlConnection(connectionString);
             conn.Open(); /* An exception will be thrown here if connection is broken */
             Console.ForegroundColor = ConsoleColor.Blue;
@@ -18,8 +17,13 @@ public static class LifetimeEvents
         catch (Exception e)
         {
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("\nDatabase connection failed.\n");
+            
+            var outputMsg =
+                "\n(LifetimeEvents.cs - line: 20) Database connection failed. Check to make sure connection string is valid.";
+            Console.WriteLine(outputMsg);
+            
             Console.ResetColor();
+            
             System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
     }

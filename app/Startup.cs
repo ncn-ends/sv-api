@@ -19,7 +19,9 @@ public class Startup
         _config = configuration;
     }
 
-    private void OnAppStarted() => LifetimeEvents.OnAppStarted(_config);
+    private void OnAppStarted() => LifetimeEvents.OnAppStarted(
+        _config.GetConnectionString("ApiDatabase")
+    );
 
     public void ConfigureServices(IServiceCollection services)
     {
@@ -39,7 +41,7 @@ public class Startup
         services.AddScoped<CommentServices>();
 
         services.AddDbContext<BuildDbContext>(options =>
-            options.UseSqlServer(_config.GetValue<string>("ConnectionStrings:ApiDatabase")));
+            options.UseSqlServer(_config.GetConnectionString("ApiDatabase")));
 
         services.AddControllers(options =>
         {
