@@ -19,6 +19,8 @@ public class Startup
         _config = configuration;
     }
 
+    private void OnAppStarted() => LifetimeEvents.OnAppStarted(_config);
+
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddScoped<BuildDbContext>();
@@ -64,8 +66,13 @@ public class Startup
         // );
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(
+        IApplicationBuilder app,
+        IWebHostEnvironment env,
+        IHostApplicationLifetime lifetime)
     {
+        lifetime.ApplicationStarted.Register(OnAppStarted);
+
         app.UseHttpLogging();
         if (env.IsDevelopment())
         {
@@ -84,6 +91,7 @@ public class Startup
         if (env.IsProduction())
         {
             app.UseSecurityHeaders();
+            app.UseHsts();
         }
 
         app.UseRouting();
