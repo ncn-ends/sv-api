@@ -1,5 +1,5 @@
 
-<img src="https://i.imgur.com/0PbRLAE.png" alt="Banner for repo">
+<img src="https://i.imgur.com/JL7dG6U.png" alt="Banner for repo">
 
 
 # SV-API
