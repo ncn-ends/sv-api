@@ -9,7 +9,7 @@ For full repo and details about the project, see [here](https://github.com/ncn-e
 
 
 
-## Getting Started (Development)
+## Usage
 
 ### Configuration
 
