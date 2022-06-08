@@ -1,6 +1,5 @@
 <img src="https://i.imgur.com/EnAmPfX.png" alt="Banner for repo">
 
-test
 # SV-API
 
 The API portion of the StrategyVault project.  
